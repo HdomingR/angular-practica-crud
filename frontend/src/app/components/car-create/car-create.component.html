@@ -1,0 +1,128 @@
+<div class="car-create">
+  <app-breadcrumb [items]="breadcrumbs" />
+  <h1>Nuevo coche</h1>
+
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h2>Datos del coche</h2>
+      <div class="form-group">
+        <label for="brand">Marca</label>
+        <input id="brand" type="text" formControlName="brand" />
+      </div>
+
+      <div class="form-group">
+        <label for="model">Modelo</label>
+        <input id="model" type="text" formControlName="model" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Unidades</h2>
+        <button
+          type="button"
+          appButton
+          variant="secondary"
+          (click)="addCarDetail()"
+        >
+          + Añadir unidad
+        </button>
+      </div>
+
+      @for (detail of carDetails.controls; track $index) {
+        <div class="unit-form" [formGroup]="$any(detail)">
+          <div class="form-group">
+            <label [for]="'licensePlate-' + $index">Matrícula</label>
+            <input
+              type="text"
+              [id]="'licensePlate-' + $index"
+              formControlName="licensePlate"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'mileage-' + $index">Kilometraje</label>
+            <input
+              type="number"
+              [id]="'mileage-' + $index"
+              formControlName="mileage"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'price-' + $index">Precio</label>
+            <input
+              type="number"
+              [id]="'price-' + $index"
+              formControlName="price"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'currency-' + $index">Moneda</label>
+            <select [id]="'currency-' + $index" formControlName="currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label [for]="'manufactureYear-' + $index"
+              >Año de fabricación</label
+            >
+            <input
+              type="number"
+              [id]="'manufactureYear-' + $index"
+              formControlName="manufactureYear"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'registrationDate-' + $index"
+              >Fecha de registro</label
+            >
+            <input
+              type="date"
+              [id]="'registrationDate-' + $index"
+              formControlName="registrationDate"
+            />
+          </div>
+
+          <div class="form-group">
+            <label [for]="'availability-' + $index">Disponible</label>
+            <input
+              type="checkbox"
+              [id]="'availability-' + $index"
+              formControlName="availability"
+            />
+          </div>
+
+          <button
+            type="button"
+            appButton
+            variant="danger"
+            size="sm"
+            (click)="removeCarDetail($index)"
+          >
+            Eliminar unidad
+          </button>
+        </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        appButton
+        variant="ghost"
+        (click)="router.navigate(['/'])"
+      >
+        Cancelar
+      </button>
+      <button type="submit" appButton [disabled]="carForm.invalid">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

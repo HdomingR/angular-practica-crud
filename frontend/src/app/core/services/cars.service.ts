@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Car } from '../model/Car';
+import { CreateCar } from '../model/CarCreate';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class CarsService {
     return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
-  createCar(car: Car) {
+  createCar(car: CreateCar) {
     return this.http.post<Car>(this.apiUrl, car);
   }
 

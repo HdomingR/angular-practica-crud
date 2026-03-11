@@ -32,9 +32,17 @@
             <strong>Año de fabricación:</strong> {{ detail.manufactureYear }}
           </p>
           <p>
-            <strong>Fecha de registro:</strong> {{ detail.registrationDate }}
+            <strong>Fecha de registro:</strong>
+            {{ detail.registrationDate | date: "dd/MM/yyyy" }}
           </p>
-          <p><strong>Disponible:</strong> {{ detail.availability }}</p>
+          <p>
+            <strong>Disponible:</strong>
+            @if (detail.availability) {
+              Si
+            } @else {
+              No
+            }
+          </p>
         </div>
       }
     </section>

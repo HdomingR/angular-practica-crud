@@ -2,14 +2,20 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Car } from '../../core/model/Car';
 import { CarsService } from '../../core/services/cars.service';
-import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { MileageStatusPipe } from '../../core/pipes/mileage-status.pipe';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 
 @Component({
   selector: 'app-car-details',
-  imports: [DecimalPipe, CurrencyPipe, MileageStatusPipe, BreadcrumbComponent],
+  imports: [
+    DecimalPipe,
+    CurrencyPipe,
+    MileageStatusPipe,
+    BreadcrumbComponent,
+    DatePipe,
+  ],
   templateUrl: './car-details.component.html',
   styleUrl: './car-details.component.scss',
 })

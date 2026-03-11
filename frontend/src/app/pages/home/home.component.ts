@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../table/table.component';
-import { BreadcrumbItem } from '../model/Breadcrumb';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { TableComponent } from '../../components/table/table.component';
+import { BreadcrumbItem } from '../../core/model/Breadcrumb';
+import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-home',

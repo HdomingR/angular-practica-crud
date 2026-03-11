@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BreadcrumbItem } from '../model/Breadcrumb';
+import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 
 @Component({
   selector: 'app-breadcrumb',

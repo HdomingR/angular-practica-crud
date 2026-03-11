@@ -1,0 +1,19 @@
+.tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &--new {
+    background: #d4edda;
+    color: #155724;
+  }
+  &--km0 {
+    background: #cce5ff;
+    color: #004085;
+  }
+  &--used {
+    background: #fff3cd;
+    color: #856404;
+  }
+}

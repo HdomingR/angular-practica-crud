@@ -1,22 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { DirectivaDirective } from '../directiva.directive';
-import { Car } from '../model/Car';
-import { CarsService } from '../services/cars.service';
+import { DirectivaDirective } from '../../directiva.directive';
+import { CarsService } from '../../core/services/cars.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-table',
-  imports: [DirectivaDirective, AsyncPipe],
+  imports: [DirectivaDirective, AsyncPipe, RouterLink],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  cars: Car[] = [
-    { id: '1', brand: 'Toyota', model: 'Corolla', total: 3 },
-    { id: '2', brand: 'Honda', model: 'Civic', total: 2 },
-    { id: '3', brand: 'Ford', model: 'Focus', total: 5 },
-  ];
-
   private carsService = inject(CarsService);
 
   cars$ = this.carsService.getCars();

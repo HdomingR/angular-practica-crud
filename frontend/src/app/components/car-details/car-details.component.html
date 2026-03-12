@@ -1,0 +1,52 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+@if (car()) {
+  <div class="car-details">
+    <h1>{{ car()!.brand }} {{ car()!.model }}</h1>
+
+    <section class="car-info">
+      <p><strong>ID:</strong> {{ car()!.id }}</p>
+      <p><strong>Total unidades:</strong> {{ car()!.total }}</p>
+    </section>
+
+    <section class="car-units">
+      <h2>Unidades</h2>
+      @for (detail of car()!.carDetails; track detail.licensePlate) {
+        <div class="unit-card">
+          <p><strong>Matrícula:</strong> {{ detail.licensePlate }}</p>
+          <p>
+            <strong>Kilometraje:</strong> {{ detail.mileage | number: "1.2-2" }}
+          </p>
+          <span
+            class="tag"
+            [class.tag--new]="detail.mileage === 0"
+            [class.tag--km0]="detail.mileage > 0 && detail.mileage < 100"
+            [class.tag--used]="detail.mileage >= 100"
+          >
+            {{ detail.mileage | mileageStatus }}
+          </span>
+          <p>
+            <strong>Precio:</strong>
+            {{ detail.price | currency: detail.currency }}
+          </p>
+          <p>
+            <strong>Año de fabricación:</strong> {{ detail.manufactureYear }}
+          </p>
+          <p>
+            <strong>Fecha de registro:</strong>
+            {{ detail.registrationDate | date: "dd/MM/yyyy" }}
+          </p>
+          <p>
+            <strong>Disponible:</strong>
+            @if (detail.availability) {
+              Si
+            } @else {
+              No
+            }
+          </p>
+        </div>
+      }
+    </section>
+  </div>
+} @else {
+  <p>Cargando...</p>
+}

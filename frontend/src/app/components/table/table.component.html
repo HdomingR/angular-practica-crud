@@ -26,7 +26,14 @@
             <button class="menu-trigger" (click)="toggleMenu(car.id)">⋮</button>
             @if (activeMenuId() === car.id) {
               <div class="context-menu">
-                <button appButton variant="ghost" size="sm">Editar</button>
+                <button
+                  appButton
+                  variant="secondary"
+                  size="sm"
+                  [routerLink]="['/cars/edit', car.id]"
+                >
+                  Editar
+                </button>
                 <button
                   appButton
                   variant="danger"

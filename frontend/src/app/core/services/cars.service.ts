@@ -22,7 +22,7 @@ export class CarsService {
     return this.http.post<Car>(this.apiUrl, car);
   }
 
-  updateCar(id: string, car: Car) {
+  updateCar(id: string, car: CreateCar) {
     return this.http.put<Car>(`${this.apiUrl}/${id}`, car);
   }
 

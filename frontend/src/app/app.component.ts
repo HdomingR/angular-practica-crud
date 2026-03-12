@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { LoaderService } from './core/services/loader.service';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DirectivaDirective } from './directiva.directive';
-import { HomeComponent } from './pages/home/home.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DirectivaDirective, HomeComponent],
+  imports: [RouterOutlet, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'frontend';
+  loaderService = inject(LoaderService);
 }

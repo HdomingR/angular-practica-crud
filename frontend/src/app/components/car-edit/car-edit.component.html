@@ -115,6 +115,14 @@
       <button
         type="button"
         appButton
+        variant="danger"
+        (click)="openDeleteModal()"
+      >
+        Eliminar
+      </button>
+      <button
+        type="button"
+        appButton
         variant="ghost"
         (click)="router.navigate(['/'])"
       >

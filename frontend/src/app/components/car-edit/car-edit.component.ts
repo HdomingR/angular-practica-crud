@@ -12,6 +12,8 @@ import { CarsService } from '../../core/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 import { CreateCar } from '../../core/model/CarCreate';
+import { Dialog } from '@angular/cdk/dialog';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-car-edit',
@@ -23,6 +25,7 @@ export class CarEditComponent implements OnInit {
   private carsService = inject(CarsService);
   protected router = inject(Router);
   private route = inject(ActivatedRoute);
+  private dialog = inject(Dialog);
 
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Inicio', url: '/' },
@@ -120,5 +123,25 @@ export class CarEditComponent implements OnInit {
         this.router.navigate(['/']);
       });
     }
+  }
+
+  openDeleteModal(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: '¿Eliminar coche?',
+        message: `¿Estás seguro de que quieres eliminar este coche?`,
+      },
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        const id = this.route.snapshot.paramMap.get('id');
+        if (id) {
+          this.carsService.deleteCar(id).subscribe(() => {
+            this.router.navigate(['/']);
+          });
+        }
+      }
+    });
   }
 }

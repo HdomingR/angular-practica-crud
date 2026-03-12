@@ -1,0 +1,8 @@
+<div class="modal">
+  <h2>{{ data.title }}</h2>
+  <p>{{ data.message }}</p>
+  <div class="modal__actions">
+    <button appButton variant="ghost" (click)="cancel()">Cancelar</button>
+    <button appButton variant="danger" (click)="confirm()">Eliminar</button>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { Car } from '../../core/model/Car';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-table',
@@ -16,6 +17,7 @@ import { Car } from '../../core/model/Car';
 export class TableComponent {
   private carsService = inject(CarsService);
   private dialog = inject(Dialog);
+  private notificationService = inject(NotificationService);
 
   cars$ = this.carsService.getCars();
   activeMenuId = signal<string | null>(null);
@@ -30,8 +32,14 @@ export class TableComponent {
 
     dialogRef.closed.subscribe((result) => {
       if (result) {
-        this.carsService.deleteCar(car.id).subscribe(() => {
-          this.cars$ = this.carsService.getCars();
+        this.carsService.deleteCar(car.id).subscribe({
+          next: () => {
+            this.cars$ = this.carsService.getCars();
+            this.notificationService.success('Coche eliminado correctamente');
+          },
+          error: () => {
+            this.notificationService.error('Error al eliminar el coche');
+          },
         });
       }
     });

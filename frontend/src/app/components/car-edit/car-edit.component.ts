@@ -14,6 +14,7 @@ import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 import { CreateCar } from '../../core/model/CarCreate';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-car-edit',
@@ -26,6 +27,7 @@ export class CarEditComponent implements OnInit {
   protected router = inject(Router);
   private route = inject(ActivatedRoute);
   private dialog = inject(Dialog);
+  private notificationService = inject(NotificationService);
 
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Inicio', url: '/' },
@@ -119,8 +121,14 @@ export class CarEditComponent implements OnInit {
         })),
       };
 
-      this.carsService.updateCar(id!, payload).subscribe(() => {
-        this.router.navigate(['/']);
+      this.carsService.updateCar(id!, payload).subscribe({
+        next: () => {
+          this.notificationService.success('Coche actualizado correctamente');
+          this.router.navigate(['/']);
+        },
+        error: () => {
+          this.notificationService.error('Error al actualizar el coche');
+        },
       });
     }
   }
@@ -137,8 +145,14 @@ export class CarEditComponent implements OnInit {
       if (result) {
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
-          this.carsService.deleteCar(id).subscribe(() => {
-            this.router.navigate(['/']);
+          this.carsService.deleteCar(id).subscribe({
+            next: () => {
+              this.notificationService.success('Coche eliminado correctamente');
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.notificationService.error('Error al eliminar el coche');
+            },
           });
         }
       }

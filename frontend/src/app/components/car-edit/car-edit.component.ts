@@ -12,6 +12,9 @@ import { CarsService } from '../../core/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 import { CreateCar } from '../../core/model/CarCreate';
+import { Dialog } from '@angular/cdk/dialog';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-car-edit',
@@ -23,6 +26,8 @@ export class CarEditComponent implements OnInit {
   private carsService = inject(CarsService);
   protected router = inject(Router);
   private route = inject(ActivatedRoute);
+  private dialog = inject(Dialog);
+  private notificationService = inject(NotificationService);
 
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Inicio', url: '/' },
@@ -116,9 +121,41 @@ export class CarEditComponent implements OnInit {
         })),
       };
 
-      this.carsService.updateCar(id!, payload).subscribe(() => {
-        this.router.navigate(['/']);
+      this.carsService.updateCar(id!, payload).subscribe({
+        next: () => {
+          this.notificationService.success('Coche actualizado correctamente');
+          this.router.navigate(['/']);
+        },
+        error: () => {
+          this.notificationService.error('Error al actualizar el coche');
+        },
       });
     }
+  }
+
+  openDeleteModal(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: '¿Eliminar coche?',
+        message: `¿Estás seguro de que quieres eliminar este coche?`,
+      },
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        const id = this.route.snapshot.paramMap.get('id');
+        if (id) {
+          this.carsService.deleteCar(id).subscribe({
+            next: () => {
+              this.notificationService.success('Coche eliminado correctamente');
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.notificationService.error('Error al eliminar el coche');
+            },
+          });
+        }
+      }
+    });
   }
 }

@@ -12,6 +12,7 @@ import { CreateCar } from '../../core/model/CarCreate';
 import { BreadcrumbItem } from '../../core/model/Breadcrumb';
 import { DirectivaDirective } from '../../directiva.directive';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-car-create',
@@ -27,6 +28,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 export class CarCreateComponent {
   private carsService = inject(CarsService);
   protected router = inject(Router);
+  private notificationService = inject(NotificationService);
 
   carForm = new FormGroup({
     brand: new FormControl('', Validators.required),
@@ -72,8 +74,14 @@ export class CarCreateComponent {
         })),
       };
 
-      this.carsService.createCar(payload).subscribe(() => {
-        this.router.navigate(['/']);
+      this.carsService.createCar(payload).subscribe({
+        next: () => {
+          this.notificationService.success('Coche creado correctamente');
+          this.router.navigate(['/']);
+        },
+        error: () => {
+          this.notificationService.error('Error al crear el coche');
+        },
       });
     }
   }

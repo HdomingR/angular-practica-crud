@@ -8,13 +8,11 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /**
  * Directive that applies consistent styling and behavior to buttons and anchor elements.
- *
  * @example
  * ```html
  * <button appButton>Primary</button>
  * <button appButton variant="danger" size="lg">Delete</button>
  * <a appButton variant="ghost" href="/somewhere">Link</a>
- * ```
  */
 @Directive({
   selector: '[appButton]',

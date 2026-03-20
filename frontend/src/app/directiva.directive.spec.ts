@@ -67,4 +67,18 @@ describe('DirectivaDirective', () => {
     fixture.detectChanges();
     expect(getButton().nativeElement.className).toContain('app-btn--disabled');
   });
+
+  it('should apply loading class when loading is true', () => {
+    host.loading = true;
+    fixture.detectChanges();
+    expect(getButton().nativeElement.className).toContain('app-btn--loading');
+  });
+
+  it('should not apply loading class when loading is false', () => {
+    host.loading = false;
+    fixture.detectChanges();
+    expect(getButton().nativeElement.className).not.toContain(
+      'app-btn--loading',
+    );
+  });
 });
